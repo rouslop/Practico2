@@ -21,7 +21,21 @@ namespace Practico2
 
         protected void buscar_Click(object sender, EventArgs e)
         {
+            if (this.documento.Text == "")
+                this.PersonasDS.SelectCommand = "SELECT * FROM Personas";
+            else
+                this.PersonasDS.SelectCommand = "SELECT * FROM Personas WHERE Documento = " + this.documento.Text + " ;";
+        }
 
+        protected void PersonasDS_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
+        {
+
+        }
+
+        protected void confirmar_Click(object sender, EventArgs e)
+        {
+            if ((this.cedula.Text != "") && (this.nombre.Text != "") && (this.apellido.Text != ""))
+                this.PersonasDS.InsertCommand = "INSERT INTO Personas (Nombres,Apellidos,Documento) VALUES('" + this.nombre.Text + "','"+ this.apellido.Text + "'," + this.cedula.Text + ");";
         }
     }
 }
