@@ -35,7 +35,20 @@ namespace Practico2
         protected void confirmar_Click(object sender, EventArgs e)
         {
             if ((this.cedula.Text != "") && (this.nombre.Text != "") && (this.apellido.Text != ""))
-                this.PersonasDS.InsertCommand = "INSERT INTO Personas (Nombres,Apellidos,Documento) VALUES('" + this.nombre.Text + "','"+ this.apellido.Text + "'," + this.cedula.Text + ");";
+            {
+                PersonasDS.InsertCommandType = SqlDataSourceCommandType.Text;
+                PersonasDS.InsertCommand = "Insert into Personas (Nombres,Apellidos,Documento) VALUES (@Nombre,@Apellido, @Documento)";
+
+                PersonasDS.InsertParameters.Add("Nombre", nombre.Text);
+                PersonasDS.InsertParameters.Add("Apellido", apellido.Text);
+                PersonasDS.InsertParameters.Add("Documento", cedula.Text);
+                PersonasDS.Insert();
+
+                nombre.Text = "";
+                apellido.Text = "";
+                cedula.Text = "";
+            }
+
         }
     }
 }
